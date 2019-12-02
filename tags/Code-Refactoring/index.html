@@ -349,48 +349,31 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/02/11/" >
+        <a class="abstract-title" href = "/2019/12/02/13/" >
             
-                <span>2018年总结</span>
+                <span>记一次简单的Groovy测试文件创建重构</span>
         </a>
         <div class="abstract-content">
-            2018年一转眼就成为了过去式，向过去挥手的同时，我们也要着眼当下，翘望未来。
-记录自己的2018年
-经手过的主要项目和作业
-Chrome自动登录校园网插件
-自己的Hexo博客和网站
-BM25信息获取实践
-华为云问答机器人
-深度学习为照片上色
-模拟博彩公司分布式网站
-
-几个重要的点
-PHP
-JAVA
-深度学习
-分布式系统
-Spring boot
-Docker
-
-入手设备
-MacBook Pro 2017
-iPhone 8
-Dell 某型号显示器（过于廉价不表）
-Xbox one
-Nintendo Switch
-树莓派
-
-出手设备
-Oneplus 5
-MacBook 2016
-LG 144...
+            故事起因公司另外某个组出现了bug，似乎与我们组上一个Spring更新的内容有关，于是我们紧急调派前线考察问题原因。发现是某一个往header里面填入数据的功能没有正常的更新header里的数据，并且Groovy Test并不能catch到这种类型的问题，于是准备重新更新一下这个单元测试。在看这个单元测试的时候，我们发现这个测试文件的生成手法相当暴力，应当适当重写。
+暴力原方法原来的生成测试文件的方法类似下方代码。
+1aExistingFile1 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME, destFile)2aExistingFi...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/02</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/02</span>
             </div>
             <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Groovy">Groovy</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Unit Test">Unit Test</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Code Refactoring">Code Refactoring</a>
+    
+</div>
             
         </div>
     </article>

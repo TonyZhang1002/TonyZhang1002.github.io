@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Tony Zhang&#39;s Blog</title>
+    <title>记一次简单的Groovy测试文件创建重构 · Tony Zhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -206,12 +206,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Tony Zhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">记一次简单的Groovy测试文件创建重构</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Tony Zhang's Blog</a>
 </header>
@@ -223,24 +234,78 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            记一次简单的Groovy测试文件创建重构
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Groovy">Groovy</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Unit Test">Unit Test</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Code Refactoring">Code Refactoring</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">523</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/12/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -341,62 +406,74 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/02/11/" >
-            
-                <span>2018年总结</span>
-        </a>
-        <div class="abstract-content">
-            2018年一转眼就成为了过去式，向过去挥手的同时，我们也要着眼当下，翘望未来。
-记录自己的2018年
-经手过的主要项目和作业
-Chrome自动登录校园网插件
-自己的Hexo博客和网站
-BM25信息获取实践
-华为云问答机器人
-深度学习为照片上色
-模拟博彩公司分布式网站
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="故事起因"><a href="#故事起因" class="headerlink" title="故事起因"></a>故事起因</h1><p>公司另外某个组出现了bug，似乎与我们组上一个Spring更新的内容有关，于是我们紧急调派前线考察问题原因。发现是某一个往header里面填入数据的功能没有正常的更新header里的数据，并且Groovy Test并不能catch到这种类型的问题，于是准备重新更新一下这个单元测试。在看这个单元测试的时候，我们发现这个测试文件的生成手法相当暴力，应当适当重写。</p>
+<h1 id="暴力原方法"><a href="#暴力原方法" class="headerlink" title="暴力原方法"></a>暴力原方法</h1><p>原来的生成测试文件的方法类似下方代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">aExistingFile1 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME, destFile)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">aExistingFile2 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME, destFile2)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">aExistingFile3 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME_UE_2, EXISTING_FILE_WITH_SUB_1)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">aExistingFile4 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME_UE_2, EXISTING_FILE_WITH_SUB_2)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">aExistingFile6 = xxxxxxUtil.createEmptyFileOnDisk(PROCESSED_DEST_DIR_NAME, destFile)</span></pre></td></tr></table></figure>
 
-几个重要的点
-PHP
-JAVA
-深度学习
-分布式系统
-Spring boot
-Docker
+<p>单元测试后删除测试文件的方法类似下方代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">   def parent1 = aExistingFile1.getParentFile()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   def parent2 = aExistingFile3.getParentFile()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">   .........</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   aExistingFile1.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   aExistingFile2.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">.........</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">   parent2.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">   parent1.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">   .........</span></pre></td></tr></table></figure>
+<p>（具体内容更改并省略）</p>
+<p>整个过程非常暴力与不干净，并且会在单元测试后在本地留下空的无用文件夹（因为没有删除干净）。这是因为所有创建空文件的常量都使用了<code>System.getProperty(&quot;user.dir&quot;)</code>，原作者可能觉得这是系统的user用户夹，但实际上是这个单元测试的目录。</p>
+<h1 id="重构方法"><a href="#重构方法" class="headerlink" title="重构方法"></a>重构方法</h1><p>首先我们拒绝使用<code>System.getProperty(&quot;user.dir&quot;)</code>，转而使用<code>System.getProperty(&quot;java.io.tmpdir&quot;)</code>，这会获得系统的temp目录，相比直接在单元测试目录下生成测试文件好很多。</p>
+<p>其次我们巧用Groovy中的map和list，快速方便的生成并删除测试文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成一个key为目录，value为测试文件名的list的map（句子好复杂）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def aExistingFileMap = [(DEST_DIR_NAME): [EXISTING_FILE_1, EXISTING_FILE_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_UE_2): [EXISTING_FILE_WITH_SUB_1, EXISTING_FILE_WITH_SUB_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">                        (PROCESSED_DEST_DIR_NAME): [EXISTING_FILE_1, EXISTING_FILE_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_STATS_2): [EXISTING_FILE_1],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_NRAT_1): [EXISTING_FILE_WITH_SUB_3],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_NRAT_2): [EXISTING_FILE_WITH_SUB_4]]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用循环一句话生成所有测试文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">aExistingFileMap.each &#123;entry -&gt; entry.value.each &#123; xxxxxxxxxUtil.createEmptyFileOnDisk(entry.key, it)&#125;&#125;</span></pre></td></tr></table></figure>
 
-入手设备
-MacBook Pro 2017
-iPhone 8
-Dell 某型号显示器（过于廉价不表）
-Xbox one
-Nintendo Switch
-树莓派
+<p>最后使用<code>org.apache.commons.io.FileUtils</code>中的<code>deleteDirectory</code>清理文件夹，干净整洁。</p>
 
-出手设备
-Oneplus 5
-MacBook 2016
-LG 144...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/02</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
     </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/03/27/12/" title= "一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （上）">
+                    <div class="prevTitle">一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （上）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        
+        var disqus_config = function () {
+        this.page.url = "http://yoursite.com/2019/12/02/13/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "记一次简单的Groovy测试文件创建重构"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://tony-zhangs-blog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -486,6 +563,24 @@ LG 144...
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#故事起因"><span class="toc-number">1.</span> <span class="toc-text">故事起因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#暴力原方法"><span class="toc-number">2.</span> <span class="toc-text">暴力原方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重构方法"><span class="toc-number">3.</span> <span class="toc-text">重构方法</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -812,6 +907,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

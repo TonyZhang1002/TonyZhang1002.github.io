@@ -349,6 +349,41 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/02/13/" >
+            
+                <span>记一次简单的Groovy测试文件创建重构</span>
+        </a>
+        <div class="abstract-content">
+            故事起因公司另外某个组出现了bug，似乎与我们组上一个Spring更新的内容有关，于是我们紧急调派前线考察问题原因。发现是某一个往header里面填入数据的功能没有正常的更新header里的数据，并且Groovy Test并不能catch到这种类型的问题，于是准备重新更新一下这个单元测试。在看这个单元测试的时候，我们发现这个测试文件的生成手法相当暴力，应当适当重写。
+暴力原方法原来的生成测试文件的方法类似下方代码。
+1aExistingFile1 = xxxxxxUtil.createEmptyFileOnDisk(DEST_DIR_NAME, destFile)2aExistingFi...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/02</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Groovy">Groovy</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Unit Test">Unit Test</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Code Refactoring">Code Refactoring</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/03/27/12/" >
             
                 <span>一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （上）</span>
@@ -687,40 +722,11 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/01/09/2/" >
-            
-                <span>星战8二刷后：一部不够优秀的电影</span>
-        </a>
-        <div class="abstract-content">
-            今天去二刷了星战8:最后的绝地武士。一刷时的激动和中二魂已经散去，认真的再看过全片后，我有了些更客观的看法。这是一部口碑评价两极分化严重的电影，部分观众认为这部电影彻底失去了星战传统的风格，愚蠢的剧情，生硬的改变，毁掉了一切；而另一部分观众则认为星战8是一部承前启后的优秀作品，优秀的视觉效果，不断反转的结局，无时不提醒着观众，这是一部全新的高品质星战电影。而我认为，星战8是一部折中的、妥协的电影，它不算多么优秀，却也不可说多么不堪。
-
-故事星战8的故事延续自星战7:原力觉醒，讲述了女主角蕾伊寻找卢克天行者渴望学习原力，然后另一方面反叛军挣脱第一秩序追杀的故事。全片从卢克出现的第一个片段开...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "review">review</a>
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "starwar">starwar</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">NEXT &amp;#62;</a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -924,9 +930,20 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 10
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -939,6 +956,11 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/02</span><a class="archive-post-title" href= "/2019/12/02/13/" >记一次简单的Groovy测试文件创建重构</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1004,6 +1026,12 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="issues"><span class="iconfont-archer">&#xe606;</span>issues</span>
+    
+        <span class="sidebar-tag-name" data-tags="Project"><span class="iconfont-archer">&#xe606;</span>Project</span>
+    
+        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
+    
         <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
     
         <span class="sidebar-tag-name" data-tags="MongoDB"><span class="iconfont-archer">&#xe606;</span>MongoDB</span>
@@ -1014,25 +1042,33 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
         <span class="sidebar-tag-name" data-tags="RESTful Application"><span class="iconfont-archer">&#xe606;</span>RESTful Application</span>
     
+        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
+    
+        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
+    
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+    
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
+    
         <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
     
         <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
     
         <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
     
-        <span class="sidebar-tag-name" data-tags="issues"><span class="iconfont-archer">&#xe606;</span>issues</span>
-    
-        <span class="sidebar-tag-name" data-tags="Project"><span class="iconfont-archer">&#xe606;</span>Project</span>
-    
-        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
-    
-        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
-    
         <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
+    
+        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
+    
+        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
         <span class="sidebar-tag-name" data-tags="VPS"><span class="iconfont-archer">&#xe606;</span>VPS</span>
     
@@ -1041,14 +1077,6 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
         <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
     
         <span class="sidebar-tag-name" data-tags="raspberry"><span class="iconfont-archer">&#xe606;</span>raspberry</span>
-    
-        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
-    
-        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
-    
-        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
-    
-        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
