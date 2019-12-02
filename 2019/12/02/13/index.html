@@ -279,7 +279,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">523</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                        <span>Word count: <span class="post-count word-count">522</span>Reading time: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,7 +416,7 @@ height:50vh;
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">   def parent1 = aExistingFile1.getParentFile()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   def parent2 = aExistingFile3.getParentFile()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">   .........</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   aExistingFile1.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   aExistingFile2.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">.........</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">   parent2.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">   parent1.delete()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">   .........</span></pre></td></tr></table></figure>
 <p>（具体内容更改并省略）</p>
 <p>整个过程非常暴力与不干净，并且会在单元测试后在本地留下空的无用文件夹（因为没有删除干净）。这是因为所有创建空文件的常量都使用了<code>System.getProperty(&quot;user.dir&quot;)</code>，原作者可能觉得这是系统的user用户夹，但实际上是这个单元测试的目录。</p>
-<h1 id="重构方法"><a href="#重构方法" class="headerlink" title="重构方法"></a>重构方法</h1><p>首先我们拒绝使用<code>System.getProperty(&quot;user.dir&quot;)</code>，转而使用<code>System.getProperty(&quot;java.io.tmpdir&quot;)</code>，这会获得系统的temp目录，相比直接在单元测试目录下生成测试文件好很多。</p>
+<h1 id="重构方法"><a href="#重构方法" class="headerlink" title="重构方法"></a>重构方法</h1><p>首先我们不使用<code>System.getProperty(&quot;user.dir&quot;)</code>，转而使用<code>System.getProperty(&quot;java.io.tmpdir&quot;)</code>，这会获得系统的temp目录，相比直接在单元测试目录下生成测试文件好很多。</p>
 <p>其次我们巧用Groovy中的map和list，快速方便的生成并删除测试文件。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成一个key为目录，value为测试文件名的list的map（句子好复杂）</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def aExistingFileMap = [(DEST_DIR_NAME): [EXISTING_FILE_1, EXISTING_FILE_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_UE_2): [EXISTING_FILE_WITH_SUB_1, EXISTING_FILE_WITH_SUB_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">                        (PROCESSED_DEST_DIR_NAME): [EXISTING_FILE_1, EXISTING_FILE_2],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_STATS_2): [EXISTING_FILE_1],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_NRAT_1): [EXISTING_FILE_WITH_SUB_3],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                        (DEST_DIR_NAME_NRAT_2): [EXISTING_FILE_WITH_SUB_4]]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用循环一句话生成所有测试文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">aExistingFileMap.each &#123;entry -&gt; entry.value.each &#123; xxxxxxxxxUtil.createEmptyFileOnDisk(entry.key, it)&#125;&#125;</span></pre></td></tr></table></figure>
 
@@ -705,6 +705,10 @@ top:50vh;
     
     
     
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 11
@@ -796,6 +800,16 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
     
+        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
+    
+        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
+    
+        <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
+    
+        <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
+    
         <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
     
         <span class="sidebar-tag-name" data-tags="MongoDB"><span class="iconfont-archer">&#xe606;</span>MongoDB</span>
@@ -806,33 +820,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="RESTful Application"><span class="iconfont-archer">&#xe606;</span>RESTful Application</span>
     
-        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
-    
-        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
-    
-        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
-    
-        <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
-    
-        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
     
         <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
         <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
     
-        <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
-    
-        <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
-    
-        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
-    
-        <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
-    
-        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
-    
-        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
+        <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
     
         <span class="sidebar-tag-name" data-tags="VPS"><span class="iconfont-archer">&#xe606;</span>VPS</span>
     
@@ -841,6 +835,16 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
     
         <span class="sidebar-tag-name" data-tags="raspberry"><span class="iconfont-archer">&#xe606;</span>raspberry</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
+    
+        <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
+    
+        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
+    
+        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
