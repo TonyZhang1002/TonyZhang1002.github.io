@@ -349,29 +349,72 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/11/21/10/" >
+        <a class="abstract-title" href = "/2019/12/05/14/" >
             
-                <span>Spring Boot踩坑及解决两则（附Socket、JavaRMI、jUDDI实例）</span>
+                <span>一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）</span>
         </a>
         <div class="abstract-content">
-            最近重新上了一门分布式系统课，还是学到不少东西，从socket到JavaRMI到SOAP (jUDDI) 到RESTful都做了尝试。课最后有一个大作业，我们组员打算做一个bookie公司的网站。于是乎我就想着能走Spring Boot + Maven这一套，毕竟非常高大上（后面还可以docker化）。但是过程中还是踩了两个小雷，折腾了好一会，查了查也没有很好的说法，这里记录一下。
-“Could not autowire”运行时报错：
-1***************************2APPLICATION FAILED TO START3********************...
+            前情回顾上一集我们说到怎么建立简单的Spring Boot项目，并且在后端随机十张照片并使用Thymeleaf注入到网页中。这一集我们会使用前端的form（表单）获取用户对照片的评分，然后把评分储存在数据库MongoDB中，完成数据的所谓“持久化”。
+创建用户评分首先我们要创建一个domain包然后在这里创建一个UserAnswer的class用来保存用户的打分。
+
+在这个class里，我们构建多个变量用来保存用户的评分，并为它们生成setter和getter，后面有需要。
+UserAnswer.java里如这样：
+1/*2@author Qinyuan Zhang3@date 01/0...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/11/21</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/05</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "issues">issues</a>
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "SpringBoot">SpringBoot</a>
     
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Project">Project</a>
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "MongoDB">MongoDB</a>
     
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "springboot">springboot</a>
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Docker">Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Thymeleaf">Thymeleaf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/03/27/12/" >
+            
+                <span>一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （上）</span>
+        </a>
+        <div class="abstract-content">
+            最近需要制作一个调查网站来完成自己的项目，于是又准备捡起Spring Boot这个有趣的工具。Spring Boot整合了大量的框架和工具，我们能使用它轻松的制作多样的网站和应用。
+第零步，项目描述这是一个非常初级的web app项目，我的Final Year Project是深度学习为图片上色，复现了三种不同文章里的方法，对同一套测试集（100张图片）使用，产生了三种不同的上色效果，结合原始彩色图片，一共有4 * 100张图片。如下图所示：
+
+我希望建立一个调查网站，能够随机从400张图片抽取十张，组成两种问题，第一种是让用户判断图片是否为AI上色的，第二种是让用户为该图片打分。项目使...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/27</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "SpringBoot">SpringBoot</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "MongoDB">MongoDB</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Docker">Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Thymeleaf">Thymeleaf</a>
     
 </div>
             
@@ -593,9 +636,24 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 11
+        Total : 12
         </div>
         <!-- search  -->
         
@@ -608,6 +666,11 @@
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2019/12/05/14/" >一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -692,17 +755,29 @@
     
         <span class="sidebar-tag-name" data-tags="Thymeleaf"><span class="iconfont-archer">&#xe606;</span>Thymeleaf</span>
     
-        <span class="sidebar-tag-name" data-tags="RESTful Application"><span class="iconfont-archer">&#xe606;</span>RESTful Application</span>
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
+        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
     
         <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
     
         <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
     
+        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
+    
+        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
+    
+        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
+    
         <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
     
         <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+    
+        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
+    
+        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
         <span class="sidebar-tag-name" data-tags="VPS"><span class="iconfont-archer">&#xe606;</span>VPS</span>
     
@@ -712,23 +787,9 @@
     
         <span class="sidebar-tag-name" data-tags="raspberry"><span class="iconfont-archer">&#xe606;</span>raspberry</span>
     
-        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
-    
-        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
-    
-        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
-    
-        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
-    
         <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
-    
-        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
-    
-        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -781,26 +842,6 @@ jsonContent:
         if (typeof window.$ === 'undefined')
         {
             console.warn('jquery load from jsdelivr failed, will load local script')
-            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
-        }
-    </script>
-    <script src="/scripts/main.js"></script>
-    <!-- algolia -->
-    
-    <!-- busuanzi  -->
-    
-    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    <!-- CNZZ  -->
-    
-    </div>
-    <!-- async load share.js -->
-     
-    </body>
-</html>
-
-
-       console.warn('jquery load from jsdelivr failed, will load local script')
             document.write('<script src="/lib/jquery.min.js">\x3C/script>')
         }
     </script>

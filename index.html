@@ -362,6 +362,46 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/05/14/" >
+            
+                <span>一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）</span>
+        </a>
+        <div class="abstract-content">
+            前情回顾上一集我们说到怎么建立简单的Spring Boot项目，并且在后端随机十张照片并使用Thymeleaf注入到网页中。这一集我们会使用前端的form（表单）获取用户对照片的评分，然后把评分储存在数据库MongoDB中，完成数据的所谓“持久化”。
+创建用户评分首先我们要创建一个domain包然后在这里创建一个UserAnswer的class用来保存用户的打分。
+
+在这个class里，我们构建多个变量用来保存用户的评分，并为它们生成setter和getter，后面有需要。
+UserAnswer.java里如这样：
+1/*2@author Qinyuan Zhang3@date 01/0...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "SpringBoot">SpringBoot</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "MongoDB">MongoDB</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Docker">Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Thymeleaf">Thymeleaf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/12/02/13/" >
             
                 <span>记一次简单的Groovy测试重构</span>
@@ -423,8 +463,6 @@ height:50vh;
         <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Docker">Docker</a>
     
         <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Thymeleaf">Thymeleaf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "RESTful Application">RESTful Application</a>
     
 </div>
             
@@ -697,38 +735,6 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
         <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Mac">Mac</a>
     
         <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "tutorial">tutorial</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/01/16/3/" >
-            
-                <span>一些看过的推理作品推荐</span>
-        </a>
-        <div class="abstract-content">
-            特别喜欢看推理类的作品（或者说侦探类吧）是因为一方面很有趣啦，看起来读起来都很有感觉，另一方面就是多多少少能体会逻辑思考的乐趣，体会命运的无常，人与人之间的纠结隔阂啦blahblah这里就不多扯了。想着自己也算看过不少自认为还算不错的侦探作品吧，这里就只罗列一些个人最喜欢的作品，然后有些太有名的也不写了比如福尔摩斯、柯南之类的，就算一个个人的小推荐吧。有兴趣的自己看看呗嘤嘤嘤～
-书籍埃勒里·奎因奎因兄弟是我个人最喜欢的推理小说作家，这里摘抄一下豆瓣的描述：
-
-埃勒里·奎因（Ellery Queen）是曼弗雷德·班宁顿·李（Manfred Bennington Lee，1905年-1971...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "recommend">recommend</a>
     
 </div>
             
@@ -1033,9 +1039,24 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 11
+        Total : 12
         </div>
         <!-- search  -->
         
@@ -1048,6 +1069,11 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2019/12/05/14/" >一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1132,17 +1158,29 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
         <span class="sidebar-tag-name" data-tags="Thymeleaf"><span class="iconfont-archer">&#xe606;</span>Thymeleaf</span>
     
-        <span class="sidebar-tag-name" data-tags="RESTful Application"><span class="iconfont-archer">&#xe606;</span>RESTful Application</span>
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
     
-        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
+        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
     
         <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
     
         <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
     
+        <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
+    
+        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
+    
+        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
+    
+        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
+    
         <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
     
         <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
+    
+        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
+    
+        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
         <span class="sidebar-tag-name" data-tags="VPS"><span class="iconfont-archer">&#xe606;</span>VPS</span>
     
@@ -1152,23 +1190,9 @@ Github链接：https://github.com/BDIC/Intelligent-QA-System
     
         <span class="sidebar-tag-name" data-tags="raspberry"><span class="iconfont-archer">&#xe606;</span>raspberry</span>
     
-        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
-    
-        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
-    
-        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
-    
-        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
-    
         <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
-    
-        <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
-    
-        <span class="sidebar-tag-name" data-tags="Unit Test"><span class="iconfont-archer">&#xe606;</span>Unit Test</span>
-    
-        <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
