@@ -281,7 +281,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2.8k</span>Reading time: <span class="post-count reading-time">14 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.9k</span>Reading time: <span class="post-count reading-time">14 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -438,7 +438,16 @@ height:50vh;
 
 <p>注意我们的变量里有一个<code>@ModelAttribute UserAnswer userAnswer</code>，这里Thymeleaf会自动帮我们生成带有用户在表单中所填信息的实例。</p>
 <p>当然，我们要把随机出来的照片信息也一并传入新建的这个userAnswer的实例中，等等方便保存在数据库里。</p>
-<h1 id="使用MongoDB持久化数据"><a href="#使用MongoDB持久化数据" class="headerlink" title="使用MongoDB持久化数据"></a>使用MongoDB持久化数据</h1><p>其实就是把数据保存好，我们先建立一个package叫<code>dao</code>代表Data access object，也可以是dpo，Data persistence object，无所谓，然后在其中创建一个与MongoDB沟通的class，我命名为<code>MongoDB.java</code>。 当然，你先要<strong>启动Mongo服务</strong>，我建议使用docker container生成，简单直接。其次为了使用mongo，我们需要在<code>pom.xml</code>中<strong>添加dependence</strong>，<strong>这两步一定要做哦！</strong></p>
+<h1 id="使用MongoDB持久化数据"><a href="#使用MongoDB持久化数据" class="headerlink" title="使用MongoDB持久化数据"></a>使用MongoDB持久化数据</h1><p>其实就是把数据保存好，我们先建立一个package叫<code>dao</code>代表Data access object，也可以是dpo，Data persistence object，无所谓，然后在其中创建一个与MongoDB沟通的class，我命名为<code>MongoDB.java</code>。 当然，</p>
+<ol>
+<li><p>你先要<strong>启动Mongo服务</strong>，我建议使用docker，简单直接 （<a href="https://www.docker.com/products/docker-desktop" target="_blank" rel="noopener">这里下载Mac和Win版本</a>， Linux下的安装自行搜索吧）。如果你已经安装了docker，直接使用：<code>docker run --name db -p 27017:27017 -d mongo:latest</code>即可启动mongoDB，并监听localhost的27017端口。</p>
+</li>
+<li><p>其次为了使用mongo，我们需要在<code>pom.xml</code>中<strong>添加dependence</strong>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-mongodb<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><strong>这两步一定要做哦！</strong></p>
 <p>随后，在<code>MongoDB.java</code>中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">@author Qinyuan Zhang</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">@date 01/04/2019</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">*/</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MongoDB</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 单例模式</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> MongoDB instance = <span class="keyword">new</span> MongoDB();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">MongoDB</span><span class="params">()</span> </span>&#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MongoDB <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">return</span> instance;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 这一行用来找到mongo服务，注意一定要启动服务哦</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">   MongoClient mongo = <span class="keyword">new</span> MongoClient(<span class="string">"localhost"</span>, <span class="number">27017</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 获取数据库中的指定Collection</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> MongoCollection&lt;Document&gt; <span class="title">getTable</span> <span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">      MongoDatabase db = mongo.getDatabase(<span class="string">"usersAnswers"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">return</span> db.getCollection(<span class="string">"user"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 初始化4*100的数据</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initDB</span> <span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">      MongoCollection&lt;Document&gt; table = <span class="keyword">this</span>.getTable();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">      List&lt;Document&gt; documents = <span class="keyword">new</span> ArrayList&lt;&gt;();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">            Document document = <span class="keyword">new</span> Document(<span class="string">"pic"</span>, i + <span class="string">"-"</span> + j).</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">                    append(<span class="string">"Real"</span>, <span class="number">0</span>).append(<span class="string">"Fake"</span>, <span class="number">0</span>).append(<span class="string">"Rate"</span>, <span class="number">0</span>).</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">                    append(<span class="string">"1Involve"</span>, <span class="number">0</span>).append(<span class="string">"2Involve"</span>, <span class="number">0</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">            documents.add(document);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">         &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">      &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">      table.insertMany(documents);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 更新数据</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateOneInDB</span><span class="params">(String picBackend, String key, <span class="keyword">int</span> value)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">      getTable().updateOne(Filters.eq(<span class="string">"pic"</span>, picBackend), <span class="keyword">new</span> Document(<span class="string">"$inc"</span>,<span class="keyword">new</span> Document(key,value)));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 获取遍历的cursor</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> MongoCursor&lt;Document&gt; <span class="title">getMongoCursor</span> <span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line">      FindIterable&lt;Document&gt; findIterable = getTable().find();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">return</span> findIterable.iterator();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line">   <span class="comment">// 关闭连接</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">closeConnection</span> <span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">if</span> (mongo != <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line">         mongo.close();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line">      &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
@@ -758,10 +767,6 @@ top:50vh;
     
     
     
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 12
@@ -852,12 +857,6 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="issues"><span class="iconfont-archer">&#xe606;</span>issues</span>
-    
-        <span class="sidebar-tag-name" data-tags="Project"><span class="iconfont-archer">&#xe606;</span>Project</span>
-    
-        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
-    
         <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
     
         <span class="sidebar-tag-name" data-tags="MongoDB"><span class="iconfont-archer">&#xe606;</span>MongoDB</span>
@@ -866,15 +865,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Thymeleaf"><span class="iconfont-archer">&#xe606;</span>Thymeleaf</span>
     
-        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
-    
-        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
-    
         <span class="sidebar-tag-name" data-tags="review"><span class="iconfont-archer">&#xe606;</span>review</span>
     
         <span class="sidebar-tag-name" data-tags="starwar"><span class="iconfont-archer">&#xe606;</span>starwar</span>
     
         <span class="sidebar-tag-name" data-tags="recommend"><span class="iconfont-archer">&#xe606;</span>recommend</span>
+    
+        <span class="sidebar-tag-name" data-tags="issues"><span class="iconfont-archer">&#xe606;</span>issues</span>
+    
+        <span class="sidebar-tag-name" data-tags="Project"><span class="iconfont-archer">&#xe606;</span>Project</span>
+    
+        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
     
         <span class="sidebar-tag-name" data-tags="Groovy"><span class="iconfont-archer">&#xe606;</span>Groovy</span>
     
@@ -882,13 +883,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Code Refactoring"><span class="iconfont-archer">&#xe606;</span>Code Refactoring</span>
     
+        <span class="sidebar-tag-name" data-tags="NLP"><span class="iconfont-archer">&#xe606;</span>NLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="Notes"><span class="iconfont-archer">&#xe606;</span>Notes</span>
+    
         <span class="sidebar-tag-name" data-tags="Mac"><span class="iconfont-archer">&#xe606;</span>Mac</span>
     
         <span class="sidebar-tag-name" data-tags="tutorial"><span class="iconfont-archer">&#xe606;</span>tutorial</span>
-    
-        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
-    
-        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
         <span class="sidebar-tag-name" data-tags="VPS"><span class="iconfont-archer">&#xe606;</span>VPS</span>
     
@@ -901,6 +902,10 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="pip3"><span class="iconfont-archer">&#xe606;</span>pip3</span>
     
         <span class="sidebar-tag-name" data-tags="python3"><span class="iconfont-archer">&#xe606;</span>python3</span>
+    
+        <span class="sidebar-tag-name" data-tags="survival recording"><span class="iconfont-archer">&#xe606;</span>survival recording</span>
+    
+        <span class="sidebar-tag-name" data-tags="Beijing"><span class="iconfont-archer">&#xe606;</span>Beijing</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
