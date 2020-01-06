@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>手记-智能QA对问答系统 · Tony Zhang&#39;s Blog</title>
+    <title>2019年总结 · Tony Zhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -220,7 +220,7 @@
                 <a href="/" >Tony Zhang&#39;s Blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">手记-智能QA对问答系统</a>
+                <a href="#" class="post-name">2019年总结</a>
             </div>
     </div>
     
@@ -250,7 +250,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            手记-智能QA对问答系统
+            2019年总结
             <!-- 404 -->
             
         </h1>
@@ -267,24 +267,14 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Project">Project</a>
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "NLP">NLP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" target="_blank" rel="noopener" data-tags = "Notes">Notes</a>
-    
-</div>
-                
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.3k</span>阅读时长: <span class="post-count reading-time">5 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">786</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/03/21</span>
+                    <span class="post-intro-time">2020/01/06</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -408,45 +398,40 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h1><p>这个项目是2018年软件杯的赛题，赛事题目在这里：</p>
-<blockquote>
-<p><a href="http://www.cnsoftbei.com/bencandy.php?fid=151&amp;aid=1612" target="_blank" rel="noopener">http://www.cnsoftbei.com/bencandy.php?fid=151&amp;aid=1612</a></p>
-</blockquote>
-<p>题目要求是为<strong>华为云</strong>设计实现一个智能QA对问答系统。</p>
-<p>从一月决定参赛到三月21号，我们已经大致确定了方向——使用NLP和规则做文本处理，SQL做数据储存，网页为前端。这篇文章主要记录我个人的项目创建过程和实现思路。</p>
-<blockquote>
-<p>Github链接：<a href="https://github.com/BDIC/Intelligent-QA-System" target="_blank" rel="noopener">https://github.com/BDIC/Intelligent-QA-System</a></p>
-</blockquote>
-<h1 id="系统设计简述"><a href="#系统设计简述" class="headerlink" title="系统设计简述"></a>系统设计简述</h1><p>系统总体分为后端和前端，在后端，我们需要使用脚本提取大量说明文本中的QA对并储存在SQL中，同时我们需要设计一个网页使工作人员可以增删查改这些QA对。在前端，我们需要能够获得用户问题，并从SQL中提取正确的答案返回用户。</p>
-<p>大体框架如图：</p>
-<p><img src="https://blog.zhangqinyuan.xyz/images/8_1.png" alt="大致框架"></p>
-<p>难点主要在QA对自动生成和用户问题匹配这两点上， 三月内先打算先处理QA对自动生成的问题。</p>
-<h1 id="QA对自动生成"><a href="#QA对自动生成" class="headerlink" title="QA对自动生成"></a>QA对自动生成</h1><p>目前打算先使用基本的NLP和规则来自动生成问题。<a href="https://github.com/HIT-SCIR/pyltp" target="_blank" rel="noopener">PYLTP</a>是哈工大的一个开源中文文本处理python库，我们目前需要用到其中的中文分词和中文词性标注功能。我们目前只对页面进行问题自动生成处理，使用华为云帮助中心每个页面顶部的结构说明（多个标签）为每个页面生成单个问题。</p>
-<p><img src="https://blog.zhangqinyuan.xyz/images/8_2.jpg" alt="标签文本"></p>
-<p>处理方法为：</p>
-<h2 id="分标签"><a href="#分标签" class="headerlink" title="分标签"></a>分标签</h2><p>这一步可能另外一名组员已经帮忙处理了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#分隔标签</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def splitor(sentence&#x3D;&#39;帮助中心 &gt; 数据仓库服务 &gt; 购买指南 &gt; 续费&#39;):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    labels_list &#x3D; list(sentence.split(&#39; &gt; &#39;))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">#   for label in labels_list:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">#       print(label + &#39; &#39;, end &#x3D; &#39;&#39;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    return labels_list</span></pre></td></tr></table></figure>
-
-<h2 id="筛除对问题生成无用的标签"><a href="#筛除对问题生成无用的标签" class="headerlink" title="筛除对问题生成无用的标签"></a>筛除对问题生成无用的标签</h2><p>有些标签对问题生成美元意义，例如第一个永远是“帮助中心”。</p>
-<p>另外如“概览”，“FAQ”这样的文字不太可能出现在问题中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#筛选有用数据</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def filter(List):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    useless_labels &#x3D; [&#39;简介&#39;,&#39;帮助中心&#39;,&#39;概览&#39;,&#39;产品简介&#39;,&#39;价格说明&#39;,&#39;快速入门&#39;,&#39;FAQ&#39;,&#39;用户指南&#39;,&#39;概述&#39;,&#39;购买指南&#39;]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    nList &#x3D; list()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    for label in List:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        if label not in useless_labels:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">            nList.append(label)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    for label in nList:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        print(label + &#39; &#39;, end &#x3D; &#39;&#39;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    print()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    return nList;</span></pre></td></tr></table></figure>
-
-<h2 id="使用PYLTP的分词和词性标注"><a href="#使用PYLTP的分词和词性标注" class="headerlink" title="使用PYLTP的分词和词性标注"></a>使用PYLTP的分词和词性标注</h2><p>需要引用PYLTP库和下载模型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#分词</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">def segmentor(sentence&#x3D;&#39;&#39;):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    segmentor &#x3D; Segmentor()  # 初始化实例</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    segmentor.load(&#39;&#x2F;Users&#x2F;zhangqinyuan&#x2F;Downloads&#x2F;ltp_data_v3.4.0&#x2F;cws.model&#39;)  # 加载模型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    words &#x3D; segmentor.segment(sentence)  # 分词</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    # 可以转换成List 输出</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    words_list &#x3D; list(words)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    segmentor.release()  # 释放模型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    return words_list</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">#获取分词后词性</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">def posttagger(words):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    postagger &#x3D; Postagger() # 初始化实例</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    postagger.load(&#39;&#x2F;Users&#x2F;zhangqinyuan&#x2F;Downloads&#x2F;ltp_data_v3.4.0&#x2F;pos.model&#39;)  # 加载模型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    postags &#x3D; postagger.postag(words)  # 词性标注</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">#   for word,tag in zip(words,postags):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">#       print (word+&#39;&#x2F;&#39;+tag)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    postags_list &#x3D; list(postags)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    postagger.release()  # 释放模型</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    return postags_list</span></pre></td></tr></table></figure>
-
-<h2 id="生成问题"><a href="#生成问题" class="headerlink" title="生成问题"></a>生成问题</h2><p>这一步最为重要，基于规则我们目前考虑了以下几种情况：</p>
-<p>一、假如只有一个有用标签或最后一个标签包含“简介”，则直接使用“什么是… …？”来生成问题。如：“帮助中心 &gt; 机器学习服务”。</p>
-<p>二、假如最后一个标签的开头是疑问词，则不需要生成问题。如：“帮助中心 &gt; 机器学习服务 &gt; 什么是机器学习服务”。</p>
-<p>三、假如最后一个标签是“概述”或者“产品概述”，则用第一个标签和倒数第二个标签生成问题。如：“帮助中心 &gt; 机器学习服务 &gt; 产品介绍 &gt; 产品概述”。</p>
-<p>四、假如最后一个标签在例外情况（动词做定语开头）之中，则用“… …有哪些？”生成问题。如：“帮助中心 &gt; 机器学习服务 &gt; 使用限制”。</p>
-<p>五、假如最后一个标签的最后一个词为管理，则用“怎么管理… …?”生成问题。如：“帮助中心 &gt; 云容器引擎 &gt; 用户指南 &gt; 操作指南 &gt; 存储管理”。</p>
-<p>六、假如最后一个标签以动词开头，使用“怎么… …”来生成问题。如：“帮助中心 &gt; 镜像服务 &gt; 用户指南 &gt; 管理 &gt; 共享镜像”。</p>
-<p>七、假如最后一个标签为”与… …”，使用第一个标签和最后一个标签形成问句。如：“帮助中心 &gt; 镜像服务 &gt; 用户指南 &gt; 管理 &gt; 与容器的关系”</p>
-<p>八、假如最后一个标签以动词、形容词开头，使用“… …有哪些”来生成。如：“帮助中心 &gt; 镜像服务 &gt; 用户指南 &gt; 管理”。</p>
-<p>目前存在这几种问题有待解决：</p>
-<p>一、仍然有些动词做定语开头的标签没有添加进情况四中。</p>
-<p>二、有些标签以名词、形容词开头但是不能用“… …有哪些”来问。如“可视化”，“场景说明”。解决方法有待研究。</p>
-<p>三、某些标签以其他词开头，如英文。解决方法有待研究。</p>
+        <p>时间过的飞快，20年代的大门已经悄然打开，2019年对我来说是很有意义的一年，我从一名学生成为了搬砖工，走上了职场，也完成了自己过去心心念念的愿望——在国外。找到一份稳定的工作，开始新的篇章。另一方面，和女票也出去玩了几趟，在北京本科毕业，在伦敦亲临了我厂的比赛，很多在我小时候感觉遥不可及的事情一一照进了现实，激动之余，我也无比憧憬新的一年，新的目标，新的征程。</p>
+<p>在此总结自己的2019，样式还是参照去年来吧。</p>
+<h3 id="经手过的主要项目和作业"><a href="#经手过的主要项目和作业" class="headerlink" title="经手过的主要项目和作业"></a>经手过的主要项目和作业</h3><ol>
+<li><p>公司的各种大小项目，学会了很多新东西，例如Groovy，Camel，TAF，etc.</p>
+</li>
+<li><p>在公司的入职培训中和小伙伴回顾了一遍Spring Boot，Docker那一套。</p>
+</li>
+<li><p>深度学习为照片上色 （本科毕业项目）。</p>
+</li>
+<li><p>写了一些Leetcode题目，看了不少面试知识。</p>
+</li>
+</ol>
+<h3 id="几个重要的点"><a href="#几个重要的点" class="headerlink" title="几个重要的点"></a>几个重要的点</h3><ol>
+<li>Java （Java 8）</li>
+<li>分布式系统 （Spring Boot，REST）</li>
+<li>各种Test （Groovy，TAF，Vertical Slice）</li>
+<li>Docker</li>
+<li>Leetcode</li>
+</ol>
+<h3 id="入手设备"><a href="#入手设备" class="headerlink" title="入手设备"></a>入手设备</h3><ol>
+<li>新主机一台哈哈哈（3700x + 5700xt，AMD YES！）</li>
+<li>MSI显示器一部，27寸VA 144hz</li>
+<li>Apple Watch</li>
+<li>Sony a6400</li>
+<li>更新了老机器的CPU，i5 6500 -&gt; i5 7600</li>
+</ol>
+<h3 id="出手设备"><a href="#出手设备" class="headerlink" title="出手设备"></a>出手设备</h3><ol>
+<li>Macbook Pro （因公司配笔记本，故出）</li>
+</ol>
+<h3 id="最喜爱产品"><a href="#最喜爱产品" class="headerlink" title="最喜爱产品"></a>最喜爱产品</h3><p>Apple Watch Series4，非常优秀的手表，尽管一天一充，但是使用起来毫无突兀感，非常的省心，能够提供很多信息和帮助。我也从一个从不戴手表的男生转变成了每天早上习惯性地拿起它来戴上的存在。消息提醒，天气查看，听Apple Music是我最喜欢的几个功能。新的台机也很棒，生活的必需品，就是这个5700xt公版实在是吵吵吵吵吵，并且AMD前期的优化非常差，可能之后还是会换回Nvidia吧。显示器，VA，拖影多多少少还是有的，之前自认为应该不影响体验，但实际上游戏表现和当初的TN比确实是不一样（虽然都是144帧）。</p>
+<h3 id="最喜爱游戏"><a href="#最喜爱游戏" class="headerlink" title="最喜爱游戏"></a>最喜爱游戏</h3><p>Insurgency Sandstorm。今年没怎么玩主机游戏，玩了几个switch游戏，就合并一下为“最喜爱游戏”吧。叛乱沙漠风暴是我今年最热爱的游戏，一年前的我绝对不会这么选择，因为作为一款小众，独立的FPS游戏，他似乎不够格，然而今年一路玩下来我发现这绝对是我最喜欢的作品。游戏质量非常优秀，不需要太多团队配合，玩家之间交流很多，游戏持续给予优化提升，虽然没有各种花里胡哨的活动，但是就是质朴的突突突。相信这就是一部分玩家如此热爱这个系列的原因。</p>
+<h3 id="去过的最棒的地方"><a href="#去过的最棒的地方" class="headerlink" title="去过的最棒的地方"></a>去过的最棒的地方</h3><p>酋长球场，热爱与信仰，无需多说。</p>
+<h3 id="最佳电影电视剧"><a href="#最佳电影电视剧" class="headerlink" title="最佳电影电视剧"></a>最佳电影电视剧</h3><p>按下不表</p>
+<p>2020年，希望大家还是最棒的那个娃！</p>
 
     </article>
     <!-- license  -->
@@ -455,17 +440,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/28/7/" title= "pip3安装gensim 问题解决">
-                    <div class="nextTitle">pip3安装gensim 问题解决</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/02/01/5/" title= "openWRT+shadowsocks+树莓派 翻出去&翻回来？（简单向教程）">
-                    <div class="prevTitle">openWRT+shadowsocks+树莓派 翻出去&翻回来？（简单向教程）</div>
+                <a href= "/2019/12/05/14/" title= "一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）">
+                    <div class="prevTitle">一个web项目学会Spring Boot + mongoDB + Thymeleaf + Docker （中）</div>
                 </a>
             
         </li>
@@ -482,8 +462,8 @@ height:50vh;
     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
         
         var disqus_config = function () {
-        this.page.url = "http://yoursite.com/2018/03/21/6/";  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = "手记-智能QA对问答系统"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = "http://yoursite.com/2020/01/06/15/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "2019年总结"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
         };
         
         (function () { // DON'T EDIT BELOW THIS LINE
@@ -614,7 +594,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目说明"><span class="toc-number">1.</span> <span class="toc-text">项目说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#系统设计简述"><span class="toc-number">2.</span> <span class="toc-text">系统设计简述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#QA对自动生成"><span class="toc-number">3.</span> <span class="toc-text">QA对自动生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分标签"><span class="toc-number">3.1.</span> <span class="toc-text">分标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#筛除对问题生成无用的标签"><span class="toc-number">3.2.</span> <span class="toc-text">筛除对问题生成无用的标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用PYLTP的分词和词性标注"><span class="toc-number">3.3.</span> <span class="toc-text">使用PYLTP的分词和词性标注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成问题"><span class="toc-number">3.4.</span> <span class="toc-text">生成问题</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#经手过的主要项目和作业"><span class="toc-number">1.</span> <span class="toc-text">经手过的主要项目和作业</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几个重要的点"><span class="toc-number">2.</span> <span class="toc-text">几个重要的点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入手设备"><span class="toc-number">3.</span> <span class="toc-text">入手设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#出手设备"><span class="toc-number">4.</span> <span class="toc-text">出手设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最喜爱产品"><span class="toc-number">5.</span> <span class="toc-text">最喜爱产品</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最喜爱游戏"><span class="toc-number">6.</span> <span class="toc-text">最喜爱游戏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#去过的最棒的地方"><span class="toc-number">7.</span> <span class="toc-text">去过的最棒的地方</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最佳电影电视剧"><span class="toc-number">8.</span> <span class="toc-text">最佳电影电视剧</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
